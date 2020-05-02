@@ -60,6 +60,7 @@ export const RUN = {
 export const MORTALITY_PERCENTATGE = 5
 export const SYMPTOMATIC_PERCENTAGE = 15
 export const SPEED = 1
+export const MAXSPEED = 10
 export const TOTAL_TICKS = 1600
 export const TICKS_TO_RECOVER = 500
 export const STATIC_PEOPLE_PERCENTATGE = 25

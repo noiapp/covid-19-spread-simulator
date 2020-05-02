@@ -6,6 +6,7 @@ import {
   TICKS_TO_RECOVER,
   RUN,
   SPEED,
+  MAXSPEED,
   STATES
 } from './options.js'
 import { checkCollision, calculateChangeDirection } from './collisions.js'
@@ -106,6 +107,12 @@ export class Ball {
         this.vy -= ay
         otherBall.vx = ax
         otherBall.vy = ay
+
+        // limit vx and vy to MAXSPEED
+        this.vx = Math.max(Math.min(this.vx, MAXSPEED), -MAXSPEED)
+        this.vy = Math.max(Math.min(this.vy, MAXSPEED), -MAXSPEED)
+        otherBall.vx = Math.max(Math.min(otherBall.vx, MAXSPEED), -MAXSPEED)
+        otherBall.vy = Math.max(Math.min(otherBall.vy, MAXSPEED), -MAXSPEED)
 
         // both has same state, so nothing to do
         if (this.state === state) return
