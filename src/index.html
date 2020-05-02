@@ -180,25 +180,29 @@
   <main>
     <header>
       <form>
+        <label aria-label="Set App Users percentage" title "App users">
+          <select id="app-users">
+            <option  value="0">0%</option>
+            <option selected="selected" value="25">25%</option>
+            <option value="50">50%</option>
+            <option value="65">65%</option>
+            <option value="80">80%</option>
+            <option value="100">100%</option>
+          </select>📱 App users&nbsp;
+	</label>
         <label aria-label="Activate People Stay At Home filter" title="People stay at home">
           <input id="stay-home" type="checkbox">🏠 Stay At Home
         </label>
         <label aria-label="Activate Deaths provoked by virus" title="Deaths provoked by virus">
-          <input id="deaths" type="checkbox">☠️ Show deaths
+          <input id="deaths" type="checkbox">☠️  Show deaths
         </label>
       </form>
 
       <div id="count">
-        <div>App users<br /><span id="app_users_span"><select id="app_users">
-          <option  value="0">0%</option>
-          <option selected="selected" value="25">25%</option>
-          <option value="50">50%</option>
-          <option value="60">60%</option>
-          <option value="80">80%</option>
-        </select></span></div>
         <div>Healthy<br /><span id="well">0</span></div>
-        <div>Recovered<br /><span id="recovered">0</span></div>
         <div>Sick<br /><span id="infected">0</span></div>
+        <div>Quarantine<br /><span id="quarantine">0</span></div>
+        <div>Recovered<br /><span id="recovered">0</span></div>
         <div id="death-count">Deaths<br /><span id="death">0</span></div>
         <div>Max Concurrently Sick<br /><span id="max-concurrent-infected">0</span></div>
       </div>
