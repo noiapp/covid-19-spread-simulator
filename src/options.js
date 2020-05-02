@@ -1,4 +1,5 @@
 const DEFAULT_FILTERS = {
+  appUsersPercentage: 25,
   death: false,
   stayHome: false
 }
@@ -18,12 +19,14 @@ export const COLORS = {
   death: '#c50000',
   recovered: '#D88DBC',
   infected: '#5ABA4A',
+  quarantine: '#FF8136',
   well: '#63C8F2',
   app_installed: '#000000'
 }
 
 export const STATES = {
   infected: 'infected',
+  quarantine: 'quarantine',
   well: 'well',
   recovered: 'recovered',
   death: 'death'
@@ -41,6 +44,7 @@ export const COUNTERS = {
 
 export const STARTING_BALLS = {
   [STATES.infected]: 1,
+  [STATES.quarantine]: 0,
   [STATES.well]: 199,
   [STATES.recovered]: 0,
   [STATES.death]: 0,
@@ -54,6 +58,7 @@ export const RUN = {
 }
 
 export const MORTALITY_PERCENTATGE = 5
+export const SYMPTOMATIC_PERCENTAGE = 15
 export const SPEED = 1
 export const TOTAL_TICKS = 1600
 export const TICKS_TO_RECOVER = 500

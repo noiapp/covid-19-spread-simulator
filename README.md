@@ -2,7 +2,12 @@
 
 --- 
 
-Modified to add the  "app" factor by Marco Pierobon
+- Modified to add the  "quarantine" state by Giuseppe Sucameli
+    If a symptomatic person has the app installed, all the people having the app which had contacts with him are quarantined as well.
+
+
+- Modified to add the  "app" factor by Marco Pierobon
+    An infected person having the app installed stops moving, infected people having the app don't infect other people having the app.
 
 ---
 

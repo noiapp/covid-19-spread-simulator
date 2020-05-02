@@ -10,6 +10,7 @@ import {
 
 import {
   replayButton,
+  appUsersPercSelect,
   deathFilter,
   stayHomeFilter
 } from './dom.js'
@@ -36,6 +37,7 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
         const hasMovement = RUN.filters.stayHome
           ? sketch.random(0, 100) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
           : true
+        const hasAppInstalled = (Math.random() * 100) < RUN.filters.appUsersPercentage
 
         balls[id] = new Ball({
           id,
@@ -44,7 +46,7 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
           hasMovement,
           x: sketch.random(BALL_RADIUS, sketch.width - BALL_RADIUS),
           y: sketch.random(BALL_RADIUS, sketch.height - BALL_RADIUS),
-          has_app_installed: (Math.random() * 100) < peopleWithAppInPercentage.value
+          has_app_installed: hasAppInstalled
         })
         id++
       })
@@ -75,15 +77,21 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
       resetValues()
     }
 
-    deathFilter.onclick = () => {
-      RUN.filters.death = !RUN.filters.death
+    deathFilter.onchange = () => {
+      RUN.filters.death = deathFilter.checked
       document.getElementById('death-count').classList.toggle('show', RUN.filters.death)
       startBalls()
       resetValues()
     }
 
     stayHomeFilter.onchange = () => {
-      RUN.filters.stayHome = !RUN.filters.stayHome
+      RUN.filters.stayHome = stayHomeFilter.checked
+      startBalls()
+      resetValues()
+    }
+
+    appUsersPercSelect.onchange = () => {
+      RUN.filters.appUsersPercentage = parseInt(appUsersPercSelect.value)
       startBalls()
       resetValues()
     }

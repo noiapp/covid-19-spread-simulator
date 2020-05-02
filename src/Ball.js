@@ -2,6 +2,7 @@ import {
   BALL_RADIUS,
   COLORS,
   MORTALITY_PERCENTATGE,
+  SYMPTOMATIC_PERCENTAGE,
   TICKS_TO_RECOVER,
   RUN,
   SPEED,
@@ -25,16 +26,19 @@ export class Ball {
     this.hasCollision = true
     this.survivor = false
     this.hasAppInstalled = hasAppInstalled
+    this.contacts = []
+    this.feelSick = null
   }
 
   checkState () {
-    if (this.state === STATES.infected) {
+    if (this.state === STATES.infected || this.state === STATES.quarantine) {
       if (RUN.filters.death && !this.survivor && this.timeInfected >= TICKS_TO_RECOVER / 2) {
         this.survivor = this.sketch.random(100) >= MORTALITY_PERCENTATGE
         if (!this.survivor) {
           this.hasMovement = false
+          const oldState = this.state
           this.state = STATES.death
-          RUN.results[STATES.infected]--
+          RUN.results[oldState]--
           RUN.results[STATES.death]++
           return
         }
@@ -44,12 +48,42 @@ export class Ball {
       }
 
       if (this.timeInfected >= TICKS_TO_RECOVER) {
+        const oldState = this.state
         this.state = STATES.recovered
-        RUN.results[STATES.infected]--
+        RUN.results[oldState]--
         RUN.results[STATES.recovered]++
         this.hasMovement = true
       } else {
         this.timeInfected++
+      }
+    }
+
+    // after a while it may feel sick
+    if (this.state === STATES.infected) {
+      if (this.feelSick === null && this.timeInfected >= TICKS_TO_RECOVER / 3) {
+        this.feelSick = SYMPTOMATIC_PERCENTAGE >= this.sketch.random(100)
+        if (this.feelSick) {
+          this.state = STATES.quarantine
+          RUN.results[STATES.infected]--
+          RUN.results[STATES.quarantine]++
+          return
+        }
+      }
+    }
+
+    // notify quarantine state to all contacts having app
+    if (this.state === STATES.quarantine) {
+      if (this.hasAppInstalled) {
+        for (let i = 0; i < this.contacts.length; i++) {
+          const otherBall = this.contacts[i]
+          if (otherBall.hasAppInstalled && otherBall.state === STATES.infected) {
+            otherBall.contacts.splice(otherBall.contacts.indexOf(this), 1)
+            otherBall.state = STATES.quarantine
+            RUN.results[STATES.infected]--
+            RUN.results[STATES.quarantine]++
+          }
+        }
+        this.contacts = []
       }
     }
   }
@@ -77,9 +111,15 @@ export class Ball {
         if (this.state === state) return
         // if any is recovered, then nothing happens
         if (this.state === STATES.recovered || state === STATES.recovered) return
+        // if any is in quarantine, then nothing happens
+        if (this.state === STATES.quarantine || state === STATES.quarantine) return
         // then, if some is infected, then we make both infected
         if (this.state === STATES.infected || state === STATES.infected) {
-          if (this.hasAppInstalled && otherBall.hasAppInstalled) return
+          // this and otherBall came in touch, update their contact list
+          if (this.contacts.indexOf(otherBall) === -1) {
+            this.contacts.push(otherBall)
+            otherBall.contacts.push(this)
+          }
           this.state = otherBall.state = STATES.infected
           RUN.results[STATES.infected]++
           RUN.results[STATES.well]--
