@@ -31,6 +31,7 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
   const startBalls = () => {
     let id = 0
     const peopleWithAppInPercentage = document.getElementById('app_users')
+    const peopleRespectingAutoIsolationPercentage = document.getElementById('conformists').value
     STARTING_BALLS[STATES.infected] = document.getElementById('infected_people').value
     const maxMovementSpeed =
       (document.getElementById('max_movement_speed').value * SPEED_FROM_UI_MULTIPLIER)
@@ -51,7 +52,8 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
           x: sketch.random(BALL_RADIUS, sketch.width - BALL_RADIUS),
           y: sketch.random(BALL_RADIUS, sketch.height - BALL_RADIUS),
           has_app_installed: (Math.random() * 100) < peopleWithAppInPercentage.value,
-          maxMovementSpeed
+          maxMovementSpeed,
+          peopleRespectingAutoIsolationPercentage
         })
         id++
       })

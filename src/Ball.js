@@ -14,7 +14,8 @@ const diameter = BALL_RADIUS * 2
 export class Ball {
   constructor ({
     x, y, id, state, sketch, hasMovement,
-    has_app_installed: hasAppInstalled, maxMovementSpeed
+    has_app_installed: hasAppInstalled, maxMovementSpeed,
+    peopleRespectingAutoIsolationPercentage
   }) {
     this.x = x
     this.y = y
@@ -30,6 +31,8 @@ export class Ball {
     this.hasCollision = true
     this.survivor = false
     this.hasAppInstalled = hasAppInstalled
+    // a person can arbitrarily choose whether to respect auto-isolation or not
+    this.willRespectAutoIsolation = sketch.random(100) <= peopleRespectingAutoIsolationPercentage
   }
 
   checkState () {
@@ -44,7 +47,7 @@ export class Ball {
           return
         }
       }
-      if (this.hasAppInstalled) {
+      if (this.hasAppInstalled && this.willRespectAutoIsolation) {
         this.hasMovement = false
       }
 
@@ -62,7 +65,9 @@ export class Ball {
         this.state = STATES.infected
         RUN.results[STATES.infected]++
         RUN.results[STATES.incubating]--
-        this.hasMovement = false
+        if (this.willRespectAutoIsolation) {
+          this.hasMovement = false
+        }
       } else {
         this.timeIncubating++
       }
@@ -105,7 +110,7 @@ export class Ball {
             RUN.results[STATES.incubating]++
             RUN.results[STATES.well]--
 
-            if (this.isAwareToBeInfected(otherBall)) {
+            if (this.isAwareToBeInfected(otherBall) && this.willRespectAutoIsolation) {
               // Make the person who was healthy aware of his condition by stopping her movements
               this.hasMovement = false
             }
@@ -114,7 +119,7 @@ export class Ball {
             otherBall.state = STATES.incubating
             RUN.results[STATES.incubating]++
             RUN.results[STATES.well]--
-            if (this.isAwareToBeInfected(otherBall)) {
+            if (this.isAwareToBeInfected(otherBall) && this.willRespectAutoIsolation) {
               // Make the person who was healthy aware of his condition by stopping her movements
               otherBall.hasMovement = false
             }
