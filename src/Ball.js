@@ -47,9 +47,6 @@ export class Ball {
           return
         }
       }
-      if (this.hasAppInstalled && this.willRespectAutoIsolation) {
-        this.hasMovement = false
-      }
 
       if (this.timeInfected >= TICKS_TO_RECOVER) {
         this.state = STATES.recovered
@@ -119,7 +116,7 @@ export class Ball {
             otherBall.state = STATES.incubating
             RUN.results[STATES.incubating]++
             RUN.results[STATES.well]--
-            if (this.isAwareToBeInfected(otherBall) && this.willRespectAutoIsolation) {
+            if (otherBall.isAwareToBeInfected(this) && otherBall.willRespectAutoIsolation) {
               // Make the person who was healthy aware of his condition by stopping her movements
               otherBall.hasMovement = false
             }
