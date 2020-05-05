@@ -42,11 +42,11 @@ export const COUNTERS = {
 }
 
 export const STARTING_BALLS = {
+  [STATES.death]: 0,
   [STATES.infected]: 1,
   [STATES.incubating]: 0,
   [STATES.well]: 0,
   [STATES.recovered]: 0,
-  [STATES.death]: 0,
   'max-concurrent-infected': 0
 }
 
