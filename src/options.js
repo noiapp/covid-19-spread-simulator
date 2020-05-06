@@ -15,11 +15,11 @@ export const DESKTOP_CANVAS_SIZE = {
 
 export const BALL_RADIUS = 5
 export const COLORS = {
-  death: '#bc4408',
-  recovered: '#0880bc',
-  incubating: '#f5d11b',
-  infected: '#c898a2',
-  well: '#adbc08',
+  death: '#c10000',
+  recovered: '#0031db',
+  incubating: '#f6b930',
+  infected: '#cd27b4',
+  well: '#00c372',
   app_installed: '#000000'
 }
 
