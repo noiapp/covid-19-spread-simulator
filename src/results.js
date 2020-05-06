@@ -14,6 +14,7 @@ import {
   totalPeopleElement,
   infectedPeopleElement,
   maxMovementSpeedElement,
+  appFailuresElement,
   conformistsElement,
   deathElement,
   stayHomeElement
@@ -61,6 +62,7 @@ export const resetValues = (isDesktopNewValue = isDesktop) => {
   infectedPeopleElement.disabled = true
   maxMovementSpeedElement.disabled = true
   conformistsElement.disabled = true
+  appFailuresElement.disabled = true
   deathElement.disabled = true
   stayHomeElement.disabled = true
   graphPoint = 0
@@ -95,6 +97,7 @@ export const updateCount = () => {
     infectedPeopleElement.disabled = false
     maxMovementSpeedElement.disabled = false
     conformistsElement.disabled = false
+    appFailuresElement.disabled = false
     deathElement.disabled = false
     stayHomeElement.disabled = false
   } else {
