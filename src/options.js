@@ -20,7 +20,7 @@ export const COLORS = {
   incubating: '#f6b930',
   infected: '#cd27b4',
   well: '#00c372',
-  app_installed: '#000000'
+  app_installed: '#ffffff'
 }
 
 export const STATES = {
