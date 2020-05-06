@@ -15,7 +15,8 @@ export class Ball {
   constructor ({
     x, y, id, state, sketch, hasMovement,
     has_app_installed: hasAppInstalled, maxMovementSpeed,
-    peopleRespectingAutoIsolationPercentage
+    peopleRespectingAutoIsolationPercentage,
+    appFailurePercentage
   }) {
     this.x = x
     this.y = y
@@ -31,6 +32,7 @@ export class Ball {
     this.hasCollision = true
     this.survivor = false
     this.hasAppInstalled = hasAppInstalled
+    this.appFailurePercentage = appFailurePercentage
     // a person can arbitrarily choose whether to respect auto-isolation or not
     this.willRespectAutoIsolation = sketch.random(100) <= peopleRespectingAutoIsolationPercentage
   }
@@ -132,7 +134,8 @@ export class Ball {
   }
 
   isAwareToBeInfected (otherBall) {
-    return this.hasAppInstalled && otherBall.hasAppInstalled
+    return this.hasAppInstalled && otherBall.hasAppInstalled &&
+      this.sketch.random(100) >= this.appFailurePercentage
   }
 
   move () {
