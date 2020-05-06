@@ -89,14 +89,10 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
     deathFilter.onclick = () => {
       RUN.filters.death = !RUN.filters.death
       document.getElementById('death-count').classList.toggle('show', RUN.filters.death)
-      startBalls()
-      resetValues()
     }
 
     stayHomeFilter.onchange = () => {
       RUN.filters.stayHome = !RUN.filters.stayHome
-      startBalls()
-      resetValues()
     }
   }
 
