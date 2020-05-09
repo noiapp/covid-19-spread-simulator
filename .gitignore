@@ -3,3 +3,5 @@ package-lock.json
 .now
 .DS_Store
 public
+
+.idea
