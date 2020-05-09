@@ -129,7 +129,7 @@ export class Ball {
     }
   }
 
-  isAtLeastOneOfTheTwoBallsMoving(otherBall) {
+  isAtLeastOneOfTheTwoBallsMoving (otherBall) {
     return (otherBall.vx !== 0 || otherBall.vy !== 0 || this.vx !== 0 || this.vy !== 0)
   }
 
